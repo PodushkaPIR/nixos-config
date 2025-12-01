@@ -1,0 +1,17 @@
+{
+  imports = [
+    ./audio.nix
+    ./bluetooth.nix
+    ./boot.nix
+    ./display_manager.nix
+    ./environment.nix
+    ./home-manager.nix
+    ./hyprland.nix
+    ./locales.nix
+    ./network.nix
+    ./nixfeature.nix
+    ./timezone.nix
+    ./user.nix
+    ./xserver.nix
+  ];
+}
