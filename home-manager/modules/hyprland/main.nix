@@ -14,13 +14,13 @@
       ];
 
       monitor = [
-        "DP-1,1920x1080@60,auto,auto"
-        "HDMI-A-2,1920x1080@60,auto,auto"
+        "DP-1,1920x1080@60,auto,1"
+        "HDMI-A-2,1920x1080@60,auto,1"
       ];
 
       "$mainMod" = "SUPER";
       "$terminal" = "kitty";
-      "$fileManager" = "$terminal -e sh -c 'ranger'";
+      "$fileManager" = "$terminal sh -c yazi";
       "$menu" = "wofi";
 
       exec-once = [
@@ -72,7 +72,7 @@
 
       input = {
         kb_layout = "us,ru";
-        kb_options = "grp:alt_shift_toggle";
+        kb_options = "grp:ctrl_space_toggle";
         
         touchpad = {
           natural_scroll = true;
