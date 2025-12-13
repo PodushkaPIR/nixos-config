@@ -1,6 +1,7 @@
 {
   imports = [
     ./audio.nix
+    ./wireshark.nix
     ./bluetooth.nix
     ./boot.nix
     ./display_manager.nix
