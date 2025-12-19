@@ -12,13 +12,16 @@
     pavucontrol
     zathura
     discord
-    wireshark
+    libsForQt5.okular
+    # wireshark
 
     # CLI utils
+    lazydocker
+    tshark
     autoconf
+    cava
     tree
     cliphist
-    cmake
     ffmpeg
     ffmpegthumbnailer
     fzf
@@ -26,6 +29,7 @@
     htop
     hyprpicker
     ripgrep
+    tree-sitter
     tmux
     unzip
     wget
@@ -44,12 +48,18 @@
     python312Packages.ninja
     boost
     go
+    gnumake
+    cmake
+    gdb
 
     # WM
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     
     # Other
+    cm_unicode
+    # texliveTeTeX
+    texliveMedium
     rocmPackages.llvm.clang-unwrapped
     amneziawg-tools
     wireguard-tools
