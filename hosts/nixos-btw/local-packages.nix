@@ -13,5 +13,7 @@
     bash
     gcc
     docker
+
+    fcitx5
   ];
 }
