@@ -9,6 +9,8 @@
     options = {
       # font = "JetBrains Mono Bold 13";
       recolor = true;
+      adjust-open = "best-fit";
+      selection-clipboard = "clipboard";
     };
   };
 }
