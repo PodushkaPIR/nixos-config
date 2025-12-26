@@ -54,52 +54,77 @@ let
         echo "No wallpaper selected."
     fi
   '';
+  
+  syncWorkspacePair = pkgs.writeScriptBin "sync_workspace_pair" ''
+    #!/bin/bash
+    ACTIVE_WS=$(hyprctl activeworkspace | head -1 | grep -o '[0-9]*' | head -1)
+
+    if (( $ACTIVE_WS % 2 == 1 )); then
+        hyprctl dispatch workspace $((ACTIVE_WS + 1))
+        hyprctl dispatch workspace $ACTIVE_WS
+    else
+        hyprctl dispatch workspace $((ACTIVE_WS - 1))
+        hyprctl dispatch workspace $ACTIVE_WS
+    fi
+  '';
 
 in {
-  home.packages = [ booksScript ];
+  home.packages = [
+        booksScript
+        wallpaperRandom
+        wallpaperChooser
+        syncWorkspacePair
+    ];
 
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "$mainMod      , Return, exec, $terminal"
-      "$mainMod      , Q, killactive,"
+      # ========== LAUNCH ==========
+      "$mainMod,       Return, exec, $terminal"
+      "$mainMod,       Q, killactive,"
       "$mainMod SHIFT, C, exit,"
       "$mainMod,       E, exec, $fileManager"
-      "$mainMod,       F, togglefloating,"
       "$mainMod,       D, exec, $menu --show drun"
-      "$mainMod,       P, pin,"
+
+      # ========== WINDOWS ==========
+      "$mainMod,       M, togglefloating,"
+      "$mainMod,       G, togglegroup,"
       "$mainMod,       J, togglesplit,"
-      "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
+      "$mainMod,       P, pin,"
+      "$mainMod,       F, fullscreen"
+
+      # ========== TOOLS ==========
+      # "$mainMod SHIFT  P, exec, hyprpicker -an"
+      "$mainMod,       W, exec, ${booksScript}/bin/open_books"
       "$mainMod,       B, exec, pkill -SIGUSR2 waybar"
       "$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
       "$mainMod,       L, exec, loginctl lock-session"
-      "$mainMod,       P, exec, hyprpicker -an"
       "$mainMod,       N, exec, swaync-client -t"
+      "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
       ", Print, exec, grimblast --notify --freeze copy area"
-      "$mainMod,       W, exec, ${booksScript}/bin/open_books"
 
-      # Wallpapers
+      # ========== WALLPAPERS ==========
       "$mainMod SHIFT, R, exec, ${wallpaperRandom}/bin/random_wallpaper"
       "$mainMod CTRL,  R, exec, ${wallpaperChooser}/bin/choose_wallpaper"
 
-      # Moving focus
+      # ========== FOCUS ==========
       "$mainMod, left, movefocus, l"
       "$mainMod, right, movefocus, r"
       "$mainMod, up, movefocus, u"
       "$mainMod, down, movefocus, d"
 
-      # Moving windows
+      # ========== MOVE WINDOWS ==========
       "$mainMod SHIFT, left,  swapwindow, l"
       "$mainMod SHIFT, right, swapwindow, r"
       "$mainMod SHIFT, up,    swapwindow, u"
       "$mainMod SHIFT, down,  swapwindow, d"
 
-      # Resizeing windows                   X  Y
+      # ========== RESIZE ==========
       "$mainMod CTRL, left,  resizeactive, -60 0"
       "$mainMod CTRL, right, resizeactive,  60 0"
       "$mainMod CTRL, up,    resizeactive,  0 -60"
       "$mainMod CTRL, down,  resizeactive,  0  60"
 
-      # Switching workspaces
+      # ========== WORKSPACE ==========
       "$mainMod, 1, workspace, 1"
       "$mainMod, 2, workspace, 2"
       "$mainMod, 3, workspace, 3"
@@ -110,6 +135,9 @@ in {
       "$mainMod, 8, workspace, 8"
       "$mainMod, 9, workspace, 9"
       "$mainMod, 0, workspace, 10"
+
+      "$mainMod, Tab, workspace, previous, sameworkspace"
+      "$mainMod, Space, exec, ${syncWorkspacePair}/bin/sync_workspace_pair"
 
       # Moving windows to workspaces
       "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
@@ -128,13 +156,13 @@ in {
       "$mainMod SHIFT, S, movetoworkspace, special:magic"
     ];
 
-    # Move/resize windows with mainMod + LMB/RMB and dragging
+    # ========== MOUSE ==========
     bindm = [
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
     ];
 
-    # Laptop multimedia keys for volume and LCD brightness
+    # ========== MULTIMEDIA ==========
     bindel = [
       ",XF86AudioRaiseVolume,  exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
       ",XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
@@ -144,7 +172,6 @@ in {
       "$mainMod, bracketleft,  exec, brightnessctl s 10%-"
     ];
 
-    # Audio playback
     bindl = [
       ", XF86AudioNext,  exec, playerctl next"
       ", XF86AudioPause, exec, playerctl play-pause"

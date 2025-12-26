@@ -11,10 +11,16 @@
         "XDG_SESSION_DESKTOP,Hyprland"
         "QT_QPA_PLATFORM,wayland"
         "XDG_SCREENSHOTS_DIR,$HOME/screens"
+
+        "XMODIFIERS,@im=fcitx"
+        "GTK_IM_MODULE,fcitx"
+        "QT_IM_MODULE,fcitx"
+        "SDL_IM_MODULE,fcitx"
+        "GLFW_IM_MODULE,ibus"
       ];
 
       monitor = [
-        "DP-1,1920x1080@60,auto,1"
+        "eDP-1,1920x1080@60,auto,1"
         "HDMI-A-2,1920x1080@60,auto,1"
       ];
 
@@ -25,6 +31,7 @@
 
       exec-once = [
         "waybar"
+        # "fcitx5 -d"
         # "wl-paste --type text --watch cliphist store"
         # "wl-paste --type image --watch cliphist store"
       ];
@@ -100,35 +107,28 @@
         force_default_wallpaper = -1;
         disable_hyprland_logo = false;
       };
-
-      # windowrulev2 = [
-      #   "bordersize 0, floating:0, onworkspace:w[t1]"
-
-      #   "float,class:(mpv)|(imv)|(showmethekey-gtk)"
-      #   "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
-      #   "noborder,nofocus,class:(showmethekey-gtk)"
-
-      #   "workspace 3,class:(obsidian)"
-      #   "workspace 3,class:(zathura)"
-      #   "workspace 4,class:(com.obsproject.Studio)"
-      #   "workspace 5,class:(telegram)"
-      #   "workspace 5,class:(vesktop)"
-      #   "workspace 6,class:(teams-for-linux)"
-
-      #   "suppressevent maximize, class:.*"
-      #   "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-
-      #   "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-      #   "noanim, class:^(xwaylandvideobridge)$"
-      #   "noinitialfocus, class:^(xwaylandvideobridge)$"
-      #   "maxsize 1 1, class:^(xwaylandvideobridge)$"
-      #   "noblur, class:^(xwaylandvideobridge)$"
-      #   "nofocus, class:^(xwaylandvideobridge)$"
-      # ];
-
+      
       workspace = [
-        "w[tv1], gapsout:0, gapsin:0"
-        "f[1], gapsout:0, gapsin:0"
+        "1, name:Dev, monitor:eDP-1, persistent:true"
+        "2, name:Browser, monitor:HDMI-A-2, persistent:true"
+        "3, name:Obsidian, monitor:eDP-1, persistent:true"
+        "4, name:Zathura, monitor:HDMI-A-2, persistent:true"
+        "5, name:Test, monitor:eDP-1, persistent:true"
+        "6, name:Sandbox, monitor:HDMI-A-2, persistent:true"
+        "7, name:Telegram, monitor:eDP-1, persistent:true"
+        "8, name:Videos, monitor:HDMI-A-2, persistent:true"
+      ];
+
+      windowrulev2 = [
+
+        "workspace 2, class:^(firefox|chromium|google-chrome|brave-browser)$"
+        "workspace 3, class:^(obsidian)$"
+        "workspace 4, class:^(zathura)$"
+        "workspace 6, class:^(virt-manager|virt-viewer)$"
+        "workspace 7, class:^(org.telegram.desktop)$"
+        "workspace 8, class:^(org.telegram.desktop)$, title:^Media viewer$"
+        "workspace 8, class:^(mpv|vlc)$"
+
       ];
     };
   };
