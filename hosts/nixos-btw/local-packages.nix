@@ -21,5 +21,7 @@
     libvirt
     spice
     quickemu
+    libreoffice-qt
+    jdk
   ];
 }
