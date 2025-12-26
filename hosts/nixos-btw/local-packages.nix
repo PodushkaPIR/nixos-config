@@ -15,5 +15,11 @@
     docker
 
     fcitx5
+    qemu
+    virt-manager
+    virt-viewer
+    libvirt
+    spice
+    quickemu
   ];
 }
