@@ -32,8 +32,8 @@
       exec-once = [
         "waybar"
         # "fcitx5 -d"
-        # "wl-paste --type text --watch cliphist store"
-        # "wl-paste --type image --watch cliphist store"
+        "wl-paste --type text --watch cliphist store"
+        "wl-paste --type image --watch cliphist store"
       ];
 
       general = {
@@ -120,6 +120,7 @@
       ];
 
       windowrulev2 = [
+        "float, pin, size 800 450, move 100 100, class:^(firefox)$, title:^(Picture-in-Picture|Picture in Picture)$"
 
         "workspace 2, class:^(firefox|chromium|google-chrome|brave-browser)$"
         "workspace 3, class:^(obsidian)$"
